@@ -1,20 +1,68 @@
-<ion-header [translucent]="true">
+<!-- <ion-header>
   <ion-toolbar>
     <ion-title>
-      Blank
+      PocketLab
     </ion-title>
   </ion-toolbar>
-</ion-header>
+</ion-header> -->
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content>
+  <ion-item>
+    <ion-label>PocketLab</ion-label>
+    <ion-select multiple="false" placeholder="Kategorija" interface="popover">
+      <ion-select-option value="test">test</ion-select-option>
+      <ion-select-option value="test">test</ion-select-option>
+      <ion-select-option value="test">test</ion-select-option>
+      <ion-select-option value="test">test</ion-select-option>
+      <ion-select-option value="test">test</ion-select-option>
+      <ion-select-option value="test">test</ion-select-option>
+      <ion-select-option value="test">test</ion-select-option>
+      <ion-select-option value="test">test</ion-select-option>
+      <ion-select-option value="test">test</ion-select-option>
+      <ion-select-option value="test">test</ion-select-option>
+      <ion-select-option value="test">test</ion-select-option>
+      <ion-select-option value="test">test</ion-select-option>
+      <ion-select-option value="test">test</ion-select-option>
+      <ion-select-option value="test">test</ion-select-option>
+      <ion-select-option value="test">test</ion-select-option>
+      <ion-select-option value="test">test</ion-select-option>
+      <ion-select-option value="test">test</ion-select-option>
+      <ion-select-option value="test">test</ion-select-option>
+    </ion-select>
+  </ion-item>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
+  <ion-grid fixed>
+    <div class="main-box">
+      <ion-row class="main-box-title-row">
+        <ion-col size="12">
+          <ion-title class="main-box-title">Kategorija</ion-title>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col class="main-box-parameters-text">
+          115 mL
+        </ion-col>
+        <ion-col size="2" class="main-box-parameters-text">
+          -
+        </ion-col>
+        <ion-col class="main-box-parameters-text">
+          155 mL
+        </ion-col>
+      </ion-row>
+    </div>
+    <ion-row>
+      <ion-item class="input-box">
+        <ion-label>Vrednost</ion-label>
+        <ion-input type="number" class="input-style" placeholder="Unesite vrednost"></ion-input>
+      </ion-item>
+    </ion-row>
+    <ion-row>
+      <ion-text class="text-desc">Opis rezultata</ion-text>
+    </ion-row>
+    <ion-row>
+      <ion-text class="text-details">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Recusandae
+        dignissimos veniam nemo praesentium excepturi delectus atque impedit sed? Impedit voluptas tenetur, veniam eius
+        sunt expedita laborum provident laudantium ullam recusandae.</ion-text>
+    </ion-row>
+  </ion-grid>
 </ion-content>
