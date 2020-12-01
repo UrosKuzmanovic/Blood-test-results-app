@@ -9,71 +9,128 @@
 <ion-content>
   <ion-item>
     <ion-label>PocketLab</ion-label>
-    <ionic-selectable item-content placeholder="Kategorija" [(ngModel)]="selected" [items]="data" itemValueField="id"
+    <ionic-selectable [(ngModel)]="selectedData" [items]="data" itemValueField="id"
       itemTextField="name" [canSearch]="true" groupValueField="category" groupTextField="category"
       searchPlaceholder="Unesite naziv" [isMultiple]="false" (onSelect)="onItemSelected($event)">
       <ng-template ionicSelectableCloseButtonTemplate>
         <ion-icon name="close"></ion-icon>
       </ng-template>
       <ng-template ionicSelectablePlaceholderTemplate>
-        <span style="color:#6bc3cd;">Kategorija</span>
+        <span style="color:#6bc3cd;">kategorija</span>
       </ng-template>
       <ng-template ionicSelectableSearchFailTemplate>
         <ion-title style="text-align: center; margin-top: 4vh; font-size: 2vh;">
-          Nije pronađena nijedna kategorija.
+          Nije nađena nijedna kategorija.
         </ion-title>
+      </ng-template>
+      <ng-template ionicSelectableItemIconTemplate let-data="item" let-isDataSelected="isItemSelected">
+        <ion-icon [name]="isDataSelected ? 'checkmark-circle' : 'radio-button-off'"
+          [color]="isDataSelected ? 'white' : null" slot="start">
+        </ion-icon>
       </ng-template>
     </ionic-selectable>
   </ion-item>
+  <ion-select [(ngModel)]="selectedOption" placeholder="uzrast/pol" class="selector-main ion-padding"
+    interface="action-sheet">
+    <ion-select-option value="1">muškarci</ion-select-option>
+    <ion-select-option value="2">žene</ion-select-option>
+    <ion-select-option value="3">deca</ion-select-option>
+  </ion-select>
 
   <div class="error-message" *ngIf="!data">
     <ion-title>Došlo je do greške.</ion-title>
   </div>
 
-  <div class="error-message" *ngIf="data && !selected">
-    <ion-title>Odaberite kategoriju.</ion-title>
+  <div class="error-message" *ngIf="data && !selectedData && !selectedOption">
+    <ion-title>Odaberite kategoriju i uzrast/pol.</ion-title>
   </div>
 
-  <ion-grid *ngIf="data && selected">
+  <ion-grid *ngIf="data && selectedData && selectedOption">
     <div class="main-box">
       <ion-row class="main-box-title-row">
         <ion-col size="12">
-          <ion-title class="main-box-title">{{ selected.name }}</ion-title>
+          <ion-title class="main-box-title">{{ selectedData.name }}</ion-title>
         </ion-col>
       </ion-row>
-      <ion-row *ngIf="selected.lowerLimit && selected.upperLimit">
-        <ion-col class="main-box-parameters-text">
-          {{selected.lowerLimit}} {{selected.measurementUnit}}
-        </ion-col>
-        <ion-col size="2" class="main-box-parameters-text">
-          -
-        </ion-col>
-        <ion-col class="main-box-parameters-text">
-          {{selected.upperLimit}} {{selected.measurementUnit}}
-        </ion-col>
-      </ion-row>
-      <ion-row *ngIf="!selected.lowerLimit">
-        <ion-col class="main-box-parameters-text">
-          < {{selected.upperLimit}} {{selected.measurementUnit}} </ion-col>
-      </ion-row>
-      <ion-row *ngIf="!selected.upperLimit">
-        <ion-col class="main-box-parameters-text">
-          > {{selected.lowerLimit}} {{selected.measurementUnit}}
-        </ion-col>
-      </ion-row>
+      <div *ngIf="selectedOption === '1'">
+        <ion-row *ngIf="selectedData.lowerLimitMen && selectedData.upperLimitMen">
+          <ion-col class="main-box-parameters-text">
+            {{selectedData.lowerLimitMen}} {{selectedData.measurementUnit}}
+          </ion-col>
+          <ion-col size="2" class="main-box-parameters-text">
+            -
+          </ion-col>
+          <ion-col class="main-box-parameters-text">
+            {{selectedData.upperLimitMen}} {{selectedData.measurementUnit}}
+          </ion-col>
+        </ion-row>
+        <ion-row *ngIf="!selectedData.lowerLimitMen">
+          <ion-col class="main-box-parameters-text">
+            < {{selectedData.upperLimitMen}} {{selectedData.measurementUnit}} </ion-col>
+        </ion-row>
+        <ion-row *ngIf="!selectedData.upperLimitMen">
+          <ion-col class="main-box-parameters-text">
+            > {{selectedData.lowerLimitMen}} {{selectedData.measurementUnit}}
+          </ion-col>
+        </ion-row>
+      </div>
+      <div *ngIf="selectedOption === '2'">
+        <ion-row *ngIf="selectedData.lowerLimitWomen && selectedData.upperLimitWomen">
+          <ion-col class="main-box-parameters-text">
+            {{selectedData.lowerLimitWomen}} {{selectedData.measurementUnit}}
+          </ion-col>
+          <ion-col size="2" class="main-box-parameters-text">
+            -
+          </ion-col>
+          <ion-col class="main-box-parameters-text">
+            {{selectedData.upperLimitWomen}} {{selectedData.measurementUnit}}
+          </ion-col>
+        </ion-row>
+        <ion-row *ngIf="!selectedData.lowerLimitWomen">
+          <ion-col class="main-box-parameters-text">
+            < {{selectedData.upperLimitWomen}} {{selectedData.measurementUnit}} </ion-col>
+        </ion-row>
+        <ion-row *ngIf="!selectedData.upperLimitWomen">
+          <ion-col class="main-box-parameters-text">
+            > {{selectedData.lowerLimitWomen}} {{selectedData.measurementUnit}}
+          </ion-col>
+        </ion-row>
+      </div>
+      <div *ngIf="selectedOption === '3'">
+        <ion-row *ngIf="selectedData.lowerLimitKids && selectedData.upperLimitKids">
+          <ion-col class="main-box-parameters-text">
+            {{selectedData.lowerLimitKids}} {{selectedData.measurementUnit}}
+          </ion-col>
+          <ion-col size="2" class="main-box-parameters-text">
+            -
+          </ion-col>
+          <ion-col class="main-box-parameters-text">
+            {{selectedData.upperLimitKids}} {{selectedData.measurementUnit}}
+          </ion-col>
+        </ion-row>
+        <ion-row *ngIf="!selectedData.lowerLimitKids">
+          <ion-col class="main-box-parameters-text">
+            < {{selectedData.upperLimitKids}} {{selectedData.measurementUnit}} </ion-col>
+        </ion-row>
+        <ion-row *ngIf="!selectedData.upperLimitKids">
+          <ion-col class="main-box-parameters-text">
+            > {{selectedData.lowerLimitKids}} {{selectedData.measurementUnit}}
+          </ion-col>
+        </ion-row>
+      </div>
     </div>
     <ion-row>
       <ion-item class="input-box">
         <ion-label>Vrednost</ion-label>
-        <ion-input [(ngModel)]="valueField" type="number" class="input-style" placeholder="Unesite vrednost">
+        <ion-input [(ngModel)]="valueField" type="number" class="input-style" placeholder="Unesite vrednost" (ionChange)="returnDesc()">
         </ion-input>
       </ion-item>
     </ion-row>
     <ion-row *ngIf="valueField">
-      <ion-text class="text-desc">{{ returnDesc() }}</ion-text>
+      <ion-text class="text-desc">{{ description }}</ion-text>
     </ion-row>
     <ion-row *ngIf="valueField">
-      <ion-text class="text-details">{{ returnDetails() }}</ion-text>
+      <ion-text class="text-details">{{ details }}</ion-text>
     </ion-row>
   </ion-grid>
 </ion-content>

@@ -10,72 +10,164 @@ import { IonicSelectableComponent } from "ionic-selectable";
 })
 export class HomePage implements OnInit {
   data: Data[];
-  selected: Data;
+  selectedData: Data;
   valueField: number;
+  selectedOption;
+
+  description: string;
+  details: string;
 
   constructor() {}
 
   ngOnInit() {
     this.data = dataFile;
-    console.log(this.data);
   }
 
   onItemSelected(event: CustomEvent) {
     this.valueField = null;
-    console.log("promenio");
-    
   }
 
   returnDesc() {
-    if (this.selected.lowerLimit && this.selected.upperLimit) {
-      if (
-        this.valueField >= this.selected.lowerLimit &&
-        this.valueField <= this.selected.upperLimit
+    if (this.selectedOption === "1") {
+      if (this.selectedData.lowerLimitMen && this.selectedData.upperLimitMen) {
+        if (
+          this.valueField >= this.selectedData.lowerLimitMen &&
+          this.valueField <= this.selectedData.upperLimitMen
+        ) {
+          this.description = "Vrednosti su granicama normale.";
+          this.details = this.selectedData.descIfNormal;
+          return;
+        } else if (this.valueField < this.selectedData.lowerLimitMen) {
+          this.description = "Vrednosti su snižene.";
+          this.details = this.selectedData.descIfLower;
+          return;
+        } else if (this.valueField > this.selectedData.upperLimitMen) {
+          this.description = "Vrednosti su povišene.";
+          this.details = this.selectedData.descIfHigher;
+          return;
+        }
+      } else if (
+        this.selectedData.lowerLimitMen &&
+        !this.selectedData.upperLimitMen
       ) {
-        return "Vrednosti su granicama normale.";
-      } else if (this.valueField < this.selected.lowerLimit) {
-        return "Vrednosti su snižene.";
-      } else if (this.valueField > this.selected.upperLimit) {
-        return "Vrednosti su povišene.";
-      }
-    } else if (this.selected.lowerLimit && !this.selected.upperLimit) {
-      if (this.valueField >= this.selected.lowerLimit) {
-        return "Vrednosti su granicama normale.";
-      } else {
-        return "Vrednosti su snižene.";
-      }
-    } else if (!this.selected.lowerLimit && this.selected.upperLimit) {
-      if (this.valueField <= this.selected.upperLimit) {
-        return "Vrednosti su granicama normale.";
-      } else {
-        return "Vrednosti su povišene.";
-      }
-    }
-  }
-
-  returnDetails() {
-    if (this.selected.lowerLimit && this.selected.upperLimit) {
-      if (
-        this.valueField >= this.selected.lowerLimit &&
-        this.valueField <= this.selected.upperLimit
+        if (this.valueField >= this.selectedData.lowerLimitMen) {
+          this.description = "Vrednosti su granicama normale.";
+          this.details = this.selectedData.descIfNormal;
+          return;
+        } else {
+          this.description = "Vrednosti su snižene.";
+          this.details = this.selectedData.descIfLower;
+          return;
+        }
+      } else if (
+        !this.selectedData.lowerLimitMen &&
+        this.selectedData.upperLimitMen
       ) {
-        return this.selected.descIfNormal;
-      } else if (this.valueField < this.selected.lowerLimit) {
-        return this.selected.descIfLower;
-      } else if (this.valueField > this.selected.upperLimit) {
-        return this.selected.descIfHigher;
+        if (this.valueField <= this.selectedData.upperLimitMen) {
+          this.description = "Vrednosti su granicama normale.";
+          this.details = this.selectedData.descIfNormal;
+          return;
+        } else {
+          this.description = "Vrednosti su povišene.";
+          this.details = this.selectedData.descIfHigher;
+          return;
+        }
       }
-    } else if (this.selected.lowerLimit && !this.selected.upperLimit) {
-      if (this.valueField >= this.selected.lowerLimit) {
-        return this.selected.descIfNormal;
-      } else {
-        return this.selected.descIfLower;
+    } else if (this.selectedOption === "2") {
+      if (
+        this.selectedData.lowerLimitWomen &&
+        this.selectedData.upperLimitWomen
+      ) {
+        if (
+          this.valueField >= this.selectedData.lowerLimitWomen &&
+          this.valueField <= this.selectedData.upperLimitWomen
+        ) {
+          this.description = "Vrednosti su granicama normale.";
+          this.details = this.selectedData.descIfNormal;
+          return;
+        } else if (this.valueField < this.selectedData.lowerLimitWomen) {
+          this.description = "Vrednosti su snižene.";
+          this.details = this.selectedData.descIfLower;
+          return;
+        } else if (this.valueField > this.selectedData.upperLimitWomen) {
+          this.description = "Vrednosti su povišene.";
+          this.details = this.selectedData.descIfHigher;
+          return;
+        }
+      } else if (
+        this.selectedData.lowerLimitWomen &&
+        !this.selectedData.upperLimitWomen
+      ) {
+        if (this.valueField >= this.selectedData.lowerLimitWomen) {
+          this.description = "Vrednosti su granicama normale.";
+          this.details = this.selectedData.descIfNormal;
+          return;
+        } else {
+          this.description = "Vrednosti su snižene.";
+          this.details = this.selectedData.descIfLower;
+          return;
+        }
+      } else if (
+        !this.selectedData.lowerLimitWomen &&
+        this.selectedData.upperLimitWomen
+      ) {
+        if (this.valueField <= this.selectedData.upperLimitWomen) {
+          this.description = "Vrednosti su granicama normale.";
+          this.details = this.selectedData.descIfNormal;
+          return;
+        } else {
+          this.description = "Vrednosti su povišene.";
+          this.details = this.selectedData.descIfHigher;
+          return;
+        }
       }
-    } else if (!this.selected.lowerLimit && this.selected.upperLimit) {
-      if (this.valueField <= this.selected.upperLimit) {
-        return this.selected.descIfNormal;
-      } else {
-        return this.selected.descIfHigher;
+    } else if (this.selectedOption === "3") {
+      if (
+        this.selectedData.lowerLimitKids &&
+        this.selectedData.upperLimitKids
+      ) {
+        if (
+          this.valueField >= this.selectedData.lowerLimitKids &&
+          this.valueField <= this.selectedData.upperLimitKids
+        ) {
+          this.description = "Vrednosti su granicama normale.";
+          this.details = this.selectedData.descIfNormal;
+          return;
+        } else if (this.valueField < this.selectedData.lowerLimitKids) {
+          this.description = "Vrednosti su snižene.";
+          this.details = this.selectedData.descIfLower;
+          return;
+        } else if (this.valueField > this.selectedData.upperLimitKids) {
+          this.description = "Vrednosti su povišene.";
+          this.details = this.selectedData.descIfHigher;
+          return;
+        }
+      } else if (
+        this.selectedData.lowerLimitKids &&
+        !this.selectedData.upperLimitKids
+      ) {
+        if (this.valueField >= this.selectedData.lowerLimitKids) {
+          this.description = "Vrednosti su granicama normale.";
+          this.details = this.selectedData.descIfNormal;
+          return;
+        } else {
+          this.description = "Vrednosti su snižene.";
+          this.details = this.selectedData.descIfLower;
+          return;
+        }
+      } else if (
+        !this.selectedData.lowerLimitKids &&
+        this.selectedData.upperLimitKids
+      ) {
+        if (this.valueField <= this.selectedData.upperLimitKids) {
+          this.description = "Vrednosti su granicama normale.";
+          this.details = this.selectedData.descIfNormal;
+          return;
+        } else {
+          this.description = "Vrednosti su povišene.";
+          this.details = this.selectedData.descIfHigher;
+          return;
+        }
       }
     }
   }

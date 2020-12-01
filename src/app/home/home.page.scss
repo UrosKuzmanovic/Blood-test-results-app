@@ -1,8 +1,12 @@
+.selector-main {
+  text-align: right;
+}
+
 .main-box {
   width: 80vw;
   padding: 6vh 2vw;
   display: block;
-  margin: 5vh auto 0 auto;
+  margin: 1vh auto 0 auto;
   border-width: 0.5px;
   border-style: solid;
   border-color: white;
@@ -45,7 +49,7 @@
   text-align: justify;
 }
 
-.error-message{
+.error-message {
   text-align: center;
   margin-top: 5vh;
 }

@@ -4,10 +4,14 @@ export class Data {
     public name: string,
     public category: string,
     public measurementUnit: string,
-    public lowerLimit?: number,
-    public upperLimit?: number,
-    public descIfNormal?: string,
-    public descIfLower?: string,
-    public descIfHigher?: string
+    public lowerLimitMen: number,
+    public upperLimitMen: number,
+    public lowerLimitWomen: number,
+    public upperLimitWomen: number,
+    public lowerLimitKids: number,
+    public upperLimitKids: number,
+    public descIfNormal: string,
+    public descIfLower: string,
+    public descIfHigher: string
   ) {}
 }
