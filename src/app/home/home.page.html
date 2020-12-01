@@ -9,33 +9,24 @@
 <ion-content>
   <ion-item>
     <ion-label>PocketLab</ion-label>
-    <ion-select multiple="false" placeholder="Kategorija" interface="popover">
-      <ion-select-option value="test">test</ion-select-option>
-      <ion-select-option value="test">test</ion-select-option>
-      <ion-select-option value="test">test</ion-select-option>
-      <ion-select-option value="test">test</ion-select-option>
-      <ion-select-option value="test">test</ion-select-option>
-      <ion-select-option value="test">test</ion-select-option>
-      <ion-select-option value="test">test</ion-select-option>
-      <ion-select-option value="test">test</ion-select-option>
-      <ion-select-option value="test">test</ion-select-option>
-      <ion-select-option value="test">test</ion-select-option>
-      <ion-select-option value="test">test</ion-select-option>
-      <ion-select-option value="test">test</ion-select-option>
-      <ion-select-option value="test">test</ion-select-option>
-      <ion-select-option value="test">test</ion-select-option>
-      <ion-select-option value="test">test</ion-select-option>
-      <ion-select-option value="test">test</ion-select-option>
-      <ion-select-option value="test">test</ion-select-option>
-      <ion-select-option value="test">test</ion-select-option>
+    <ion-select multiple="false" placeholder="Kategorija" interface="popover" (ionChange)="onItemSelected($event)">
+      <ion-select-option [value]="item" *ngFor="let item of data">{{ item.name }}</ion-select-option>
     </ion-select>
   </ion-item>
 
-  <ion-grid fixed>
+  <div class="error-message" *ngIf="!data">
+    <ion-title>Došlo je do greške.</ion-title>
+  </div>
+
+  <div class="error-message" *ngIf="data && !selected">
+    <ion-title>Odaberite kategoriju.</ion-title>
+  </div>
+
+  <ion-grid *ngIf="data && selected">
     <div class="main-box">
       <ion-row class="main-box-title-row">
         <ion-col size="12">
-          <ion-title class="main-box-title">Kategorija</ion-title>
+          <ion-title class="main-box-title">{{ selected.name }}</ion-title>
         </ion-col>
       </ion-row>
       <ion-row>
@@ -49,11 +40,22 @@
           155 mL
         </ion-col>
       </ion-row>
+      <ion-row>
+        <ion-col class="main-box-parameters-text">
+          < 155 mL
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col class="main-box-parameters-text">
+           > 155 mL
+        </ion-col>
+      </ion-row>
     </div>
     <ion-row>
       <ion-item class="input-box">
         <ion-label>Vrednost</ion-label>
-        <ion-input type="number" class="input-style" placeholder="Unesite vrednost"></ion-input>
+        <ion-input type="number" class="input-style" placeholder="Unesite vrednost" (ionChange)="onValueInput($event)">
+        </ion-input>
       </ion-item>
     </ion-row>
     <ion-row>
