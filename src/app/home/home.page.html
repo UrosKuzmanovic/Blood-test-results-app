@@ -9,9 +9,21 @@
 <ion-content>
   <ion-item>
     <ion-label>PocketLab</ion-label>
-    <ion-select multiple="false" placeholder="Kategorija" interface="popover" (ionChange)="onItemSelected($event)">
-      <ion-select-option [value]="item" *ngFor="let item of data">{{ item.name }}</ion-select-option>
-    </ion-select>
+    <ionic-selectable item-content placeholder="Kategorija" [(ngModel)]="selected" [items]="data" itemValueField="id"
+      itemTextField="name" [canSearch]="true" groupValueField="category" groupTextField="category"
+      searchPlaceholder="Unesite naziv" [isMultiple]="false" (onSelect)="onItemSelected($event)">
+      <ng-template ionicSelectableCloseButtonTemplate>
+        <ion-icon name="close"></ion-icon>
+      </ng-template>
+      <ng-template ionicSelectablePlaceholderTemplate>
+        <span style="color:#6bc3cd;">Kategorija</span>
+      </ng-template>
+      <ng-template ionicSelectableSearchFailTemplate>
+        <ion-title style="text-align: center; margin-top: 4vh; font-size: 2vh;">
+          Nije pronađena nijedna kategorija.
+        </ion-title>
+      </ng-template>
+    </ionic-selectable>
   </ion-item>
 
   <div class="error-message" *ngIf="!data">
@@ -29,42 +41,39 @@
           <ion-title class="main-box-title">{{ selected.name }}</ion-title>
         </ion-col>
       </ion-row>
-      <ion-row>
+      <ion-row *ngIf="selected.lowerLimit && selected.upperLimit">
         <ion-col class="main-box-parameters-text">
-          115 mL
+          {{selected.lowerLimit}} {{selected.measurementUnit}}
         </ion-col>
         <ion-col size="2" class="main-box-parameters-text">
           -
         </ion-col>
         <ion-col class="main-box-parameters-text">
-          155 mL
+          {{selected.upperLimit}} {{selected.measurementUnit}}
         </ion-col>
       </ion-row>
-      <ion-row>
+      <ion-row *ngIf="!selected.lowerLimit">
         <ion-col class="main-box-parameters-text">
-          < 155 mL
-        </ion-col>
+          < {{selected.upperLimit}} {{selected.measurementUnit}} </ion-col>
       </ion-row>
-      <ion-row>
+      <ion-row *ngIf="!selected.upperLimit">
         <ion-col class="main-box-parameters-text">
-           > 155 mL
+          > {{selected.lowerLimit}} {{selected.measurementUnit}}
         </ion-col>
       </ion-row>
     </div>
     <ion-row>
       <ion-item class="input-box">
         <ion-label>Vrednost</ion-label>
-        <ion-input type="number" class="input-style" placeholder="Unesite vrednost" (ionChange)="onValueInput($event)">
+        <ion-input [(ngModel)]="valueField" type="number" class="input-style" placeholder="Unesite vrednost">
         </ion-input>
       </ion-item>
     </ion-row>
-    <ion-row>
-      <ion-text class="text-desc">Opis rezultata</ion-text>
+    <ion-row *ngIf="valueField">
+      <ion-text class="text-desc">{{ returnDesc() }}</ion-text>
     </ion-row>
-    <ion-row>
-      <ion-text class="text-details">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Recusandae
-        dignissimos veniam nemo praesentium excepturi delectus atque impedit sed? Impedit voluptas tenetur, veniam eius
-        sunt expedita laborum provident laudantium ullam recusandae.</ion-text>
+    <ion-row *ngIf="valueField">
+      <ion-text class="text-details">{{ returnDetails() }}</ion-text>
     </ion-row>
   </ion-grid>
 </ion-content>

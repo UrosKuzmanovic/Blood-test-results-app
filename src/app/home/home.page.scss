@@ -28,6 +28,7 @@
   margin: 5vh auto 0 auto;
   text-align: right;
   --highlight-color-focused: white;
+  --highlight-color-valid: white;
 }
 
 .text-desc {
@@ -40,7 +41,7 @@
 .text-details {
   width: 80vw;
   display: block;
-  margin: 5vh auto 0 auto;
+  margin: 5vh auto 5vh auto;
   text-align: justify;
 }
 

@@ -1,0 +1,33 @@
+[
+  {
+    "id": 1,
+    "name": "Biohemija",
+    "category": "Biohemija",
+    "lowerLimit": 100,
+    "upperLimit": 150,
+    "measurementUnit": "mL",
+    "descIfNormal": "Vrednosti su normalne",
+    "descIfLower": "Previše su smanjeni rezultati",
+    "descIfHigher": "Baš su povišeni rezultati"
+  },
+  {
+    "id": 2,
+    "name": "Hematologija",
+    "category": "Hematologija",
+    "lowerLimit": 70,
+    "measurementUnit": "mg",
+    "descIfNormal": "Vrednosti su normalne",
+    "descIfLower": "Previše su smanjeni rezultati",
+    "descIfHigher": "Baš su povišeni rezultati"
+  },
+  {
+    "id": 3,
+    "name": "Koagulacija",
+    "category": "Koagulacija",
+    "upperLimit": 10,
+    "measurementUnit": "mol",
+    "descIfNormal": "Vrednosti su normalne",
+    "descIfLower": "Previše su smanjeni rezultati",
+    "descIfHigher": "Baš su povišeni rezultati"
+  }
+]
