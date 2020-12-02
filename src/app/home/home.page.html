@@ -9,9 +9,9 @@
 <ion-content>
   <ion-item>
     <ion-label>PocketLab</ion-label>
-    <ionic-selectable [(ngModel)]="selectedData" [items]="data" itemValueField="id"
-      itemTextField="name" [canSearch]="true" groupValueField="category" groupTextField="category"
-      searchPlaceholder="Unesite naziv" [isMultiple]="false" (onSelect)="onItemSelected($event)">
+    <ionic-selectable #selectData [(ngModel)]="selectedData" [items]="data" itemValueField="id" itemTextField="name"
+      [canSearch]="true" groupValueField="category" groupTextField="category" searchPlaceholder="Unesite naziv ili kategoriju"
+      [isMultiple]="false" (onSelect)="onItemSelected($event)" (onSearch)="onSearchItems($event)">
       <ng-template ionicSelectableCloseButtonTemplate>
         <ion-icon name="close"></ion-icon>
       </ng-template>
@@ -20,7 +20,7 @@
       </ng-template>
       <ng-template ionicSelectableSearchFailTemplate>
         <ion-title style="text-align: center; margin-top: 4vh; font-size: 2vh;">
-          Nije nađena nijedna kategorija.
+          Nije nađena nijedna vrednost ili kategorija.
         </ion-title>
       </ng-template>
       <ng-template ionicSelectableItemIconTemplate let-data="item" let-isDataSelected="isItemSelected">
@@ -30,26 +30,33 @@
       </ng-template>
     </ionic-selectable>
   </ion-item>
-  <ion-select [(ngModel)]="selectedOption" placeholder="uzrast/pol" class="selector-main ion-padding"
-    interface="action-sheet">
+  <ion-select [(ngModel)]="selectedOption" placeholder="pol" class="selector-main ion-padding" interface="action-sheet"
+    *ngIf="selectedData && showSelectOption" cancelText="">
     <ion-select-option value="1">muškarci</ion-select-option>
     <ion-select-option value="2">žene</ion-select-option>
-    <ion-select-option value="3">deca</ion-select-option>
+    <ion-select-option value="3" *ngIf="selectedData.lowerLimitKids && selectedData.upperLimitKids">deca
+    </ion-select-option>
   </ion-select>
 
   <div class="error-message" *ngIf="!data">
-    <ion-title>Došlo je do greške.</ion-title>
+    <ion-title class="ion-margin-bottom">Dobro došli u PocketLab!</ion-title>
+    <ion-text>Došlo je do greške, molim Vas pokušajte ponovo kasnije.</ion-text>
   </div>
 
   <div class="error-message" *ngIf="data && !selectedData && !selectedOption">
-    <ion-title>Odaberite kategoriju i uzrast/pol.</ion-title>
+    <ion-title class="ion-margin-bottom">Dobro došli u PocketLab!</ion-title>
+    <ion-text>Odaberite kategoriju.</ion-text>
+  </div>
+
+  <div class="error-message" *ngIf="data && selectedData && !selectedOption">
+    <ion-text>Odaberite pol.</ion-text>
   </div>
 
   <ion-grid *ngIf="data && selectedData && selectedOption">
-    <div class="main-box">
-      <ion-row class="main-box-title-row">
+    <div [ngClass]="{'main-box-selection': showSelectOption, 'main-box-no-selection': !showSelectOption}">
+      <ion-row text-center class="main-box-title-row">
         <ion-col size="12">
-          <ion-title class="main-box-title">{{ selectedData.name }}</ion-title>
+          <ion-text class="main-box-title">{{ selectedData.name }}</ion-text>
         </ion-col>
       </ion-row>
       <div *ngIf="selectedOption === '1'">
@@ -121,15 +128,16 @@
     </div>
     <ion-row>
       <ion-item class="input-box">
-        <ion-label>Vrednost</ion-label>
-        <ion-input [(ngModel)]="valueField" type="number" class="input-style" placeholder="Unesite vrednost" (ionChange)="returnDesc()">
+        <ion-label>Vrednost ({{ selectedData.measurementUnit }})</ion-label>
+        <ion-input [(ngModel)]="valueField" type="number" class="input-style" placeholder="Unesite vrednost"
+          (ionChange)="setDesc()">
         </ion-input>
       </ion-item>
     </ion-row>
-    <ion-row *ngIf="valueField">
+    <ion-row *ngIf="valueField !== null">
       <ion-text class="text-desc">{{ description }}</ion-text>
     </ion-row>
-    <ion-row *ngIf="valueField">
+    <ion-row *ngIf="valueField !== null && details">
       <ion-text class="text-details">{{ details }}</ion-text>
     </ion-row>
   </ion-grid>

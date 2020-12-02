@@ -2,9 +2,9 @@
   text-align: right;
 }
 
-.main-box {
-  width: 80vw;
-  padding: 6vh 2vw;
+.main-box-selection {
+  width: 85vw;
+  padding: 5vh 2vw;
   display: block;
   margin: 1vh auto 0 auto;
   border-width: 0.5px;
@@ -12,13 +12,26 @@
   border-color: white;
 }
 
+.main-box-no-selection {
+  width: 85vw;
+  padding: 6vh 2vw;
+  display: block;
+  margin: 5vh auto 0 auto;
+  border-width: 0.5px;
+  border-style: solid;
+  border-color: white;
+}
+
 .main-box-title-row {
-  padding-bottom: 4vh;
+  padding-bottom: 3vh;
 }
 
 .main-box-title {
   text-align: center;
+  display: block;
+  margin: 0 auto;
   font-size: 25px;
+  padding: 0 1vw 0 1vw;
 }
 
 .main-box-parameters-text {
@@ -27,7 +40,7 @@
 }
 
 .input-box {
-  width: 80vw;
+  width: 85vw;
   display: block;
   margin: 5vh auto 0 auto;
   text-align: right;
@@ -36,20 +49,21 @@
 }
 
 .text-desc {
-  width: 80vw;
+  width: 85vw;
   display: block;
   margin: 5vh auto 0 auto;
   text-align: center;
 }
 
 .text-details {
-  width: 80vw;
+  width: 85vw;
   display: block;
   margin: 5vh auto 5vh auto;
-  text-align: justify;
+  white-space: pre-wrap;
 }
 
 .error-message {
   text-align: center;
   margin-top: 5vh;
 }
+

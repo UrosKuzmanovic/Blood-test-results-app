@@ -10,7 +10,6 @@ export class Data {
     public upperLimitWomen: number,
     public lowerLimitKids: number,
     public upperLimitKids: number,
-    public descIfNormal: string,
     public descIfLower: string,
     public descIfHigher: string
   ) {}

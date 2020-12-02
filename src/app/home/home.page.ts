@@ -1,33 +1,61 @@
-import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
+import { AfterViewInit, Component, OnDestroy, OnInit } from "@angular/core";
 import { Data } from "../model/data";
 import dataFile from "../data/data.json";
 import { IonicSelectableComponent } from "ionic-selectable";
+import { Platform } from "@ionic/angular";
+import { Subscription } from "rxjs";
 
 @Component({
   selector: "app-home",
   templateUrl: "home.page.html",
   styleUrls: ["home.page.scss"],
 })
-export class HomePage implements OnInit {
+export class HomePage implements OnInit, OnDestroy, AfterViewInit {
   data: Data[];
   selectedData: Data;
   valueField: number;
   selectedOption;
-
+  showSelectOption = true;
   description: string;
   details: string;
+  backButtonSub: Subscription;
 
-  constructor() {}
+  constructor(private platform: Platform) {}
 
   ngOnInit() {
     this.data = dataFile;
   }
 
-  onItemSelected(event: CustomEvent) {
-    this.valueField = null;
+  ngAfterViewInit() {
+    this.backButtonSub = this.platform.backButton.subscribe(() => {
+      navigator["app"].exitApp();
+    });
   }
 
-  returnDesc() {
+  ngOnDestroy() {
+    this.backButtonSub.unsubscribe();
+  }
+
+  onItemSelected(event: {
+    component: IonicSelectableComponent;
+    item: Data;
+    isSelected: boolean;
+  }) {
+    this.valueField = null;
+    this.selectedOption = "1";
+    if (
+      !event.item.lowerLimitKids &&
+      !event.item.upperLimitKids &&
+      event.item.lowerLimitMen === event.item.lowerLimitWomen &&
+      event.item.upperLimitMen === event.item.upperLimitWomen
+    ) {
+      this.showSelectOption = false;
+    } else {
+      this.showSelectOption = true;
+    }
+  }
+
+  setDesc() {
     if (this.selectedOption === "1") {
       if (this.selectedData.lowerLimitMen && this.selectedData.upperLimitMen) {
         if (
@@ -35,15 +63,17 @@ export class HomePage implements OnInit {
           this.valueField <= this.selectedData.upperLimitMen
         ) {
           this.description = "Vrednosti su granicama normale.";
-          this.details = this.selectedData.descIfNormal;
+          this.details = null;
           return;
         } else if (this.valueField < this.selectedData.lowerLimitMen) {
           this.description = "Vrednosti su snižene.";
-          this.details = this.selectedData.descIfLower;
+          this.details =
+            "UZROCI SNIŽENIH VREDNOSTI\n\n" + this.selectedData.descIfLower;
           return;
         } else if (this.valueField > this.selectedData.upperLimitMen) {
           this.description = "Vrednosti su povišene.";
-          this.details = this.selectedData.descIfHigher;
+          this.details =
+            "UZROCI POVIŠENIH VREDNOSTI\n\n" + this.selectedData.descIfHigher;
           return;
         }
       } else if (
@@ -52,11 +82,12 @@ export class HomePage implements OnInit {
       ) {
         if (this.valueField >= this.selectedData.lowerLimitMen) {
           this.description = "Vrednosti su granicama normale.";
-          this.details = this.selectedData.descIfNormal;
+          this.details = null;
           return;
         } else {
           this.description = "Vrednosti su snižene.";
-          this.details = this.selectedData.descIfLower;
+          this.details =
+            "UZROCI SNIŽENIH VREDNOSTI\n\n" + this.selectedData.descIfLower;
           return;
         }
       } else if (
@@ -65,11 +96,12 @@ export class HomePage implements OnInit {
       ) {
         if (this.valueField <= this.selectedData.upperLimitMen) {
           this.description = "Vrednosti su granicama normale.";
-          this.details = this.selectedData.descIfNormal;
+          this.details = null;
           return;
         } else {
           this.description = "Vrednosti su povišene.";
-          this.details = this.selectedData.descIfHigher;
+          this.details =
+            "UZROCI POVIŠENIH VREDNOSTI\n\n" + this.selectedData.descIfHigher;
           return;
         }
       }
@@ -83,15 +115,17 @@ export class HomePage implements OnInit {
           this.valueField <= this.selectedData.upperLimitWomen
         ) {
           this.description = "Vrednosti su granicama normale.";
-          this.details = this.selectedData.descIfNormal;
+          this.details = null;
           return;
         } else if (this.valueField < this.selectedData.lowerLimitWomen) {
           this.description = "Vrednosti su snižene.";
-          this.details = this.selectedData.descIfLower;
+          this.details =
+            "UZROCI SNIŽENIH VREDNOSTI\n\n" + this.selectedData.descIfLower;
           return;
         } else if (this.valueField > this.selectedData.upperLimitWomen) {
           this.description = "Vrednosti su povišene.";
-          this.details = this.selectedData.descIfHigher;
+          this.details =
+            "UZROCI POVIŠENIH VREDNOSTI\n\n" + this.selectedData.descIfHigher;
           return;
         }
       } else if (
@@ -100,11 +134,12 @@ export class HomePage implements OnInit {
       ) {
         if (this.valueField >= this.selectedData.lowerLimitWomen) {
           this.description = "Vrednosti su granicama normale.";
-          this.details = this.selectedData.descIfNormal;
+          this.details = null;
           return;
         } else {
           this.description = "Vrednosti su snižene.";
-          this.details = this.selectedData.descIfLower;
+          this.details =
+            "UZROCI SNIŽENIH VREDNOSTI\n\n" + this.selectedData.descIfLower;
           return;
         }
       } else if (
@@ -113,11 +148,12 @@ export class HomePage implements OnInit {
       ) {
         if (this.valueField <= this.selectedData.upperLimitWomen) {
           this.description = "Vrednosti su granicama normale.";
-          this.details = this.selectedData.descIfNormal;
+          this.details = null;
           return;
         } else {
           this.description = "Vrednosti su povišene.";
-          this.details = this.selectedData.descIfHigher;
+          this.details =
+            "UZROCI POVIŠENIH VREDNOSTI\n\n" + this.selectedData.descIfHigher;
           return;
         }
       }
@@ -131,15 +167,17 @@ export class HomePage implements OnInit {
           this.valueField <= this.selectedData.upperLimitKids
         ) {
           this.description = "Vrednosti su granicama normale.";
-          this.details = this.selectedData.descIfNormal;
+          this.details = null;
           return;
         } else if (this.valueField < this.selectedData.lowerLimitKids) {
           this.description = "Vrednosti su snižene.";
-          this.details = this.selectedData.descIfLower;
+          this.details =
+            "UZROCI SNIŽENIH VREDNOSTI\n\n" + this.selectedData.descIfLower;
           return;
         } else if (this.valueField > this.selectedData.upperLimitKids) {
           this.description = "Vrednosti su povišene.";
-          this.details = this.selectedData.descIfHigher;
+          this.details =
+            "UZROCI POVIŠENIH VREDNOSTI\n\n" + this.selectedData.descIfHigher;
           return;
         }
       } else if (
@@ -148,11 +186,12 @@ export class HomePage implements OnInit {
       ) {
         if (this.valueField >= this.selectedData.lowerLimitKids) {
           this.description = "Vrednosti su granicama normale.";
-          this.details = this.selectedData.descIfNormal;
+          this.details = null;
           return;
         } else {
           this.description = "Vrednosti su snižene.";
-          this.details = this.selectedData.descIfLower;
+          this.details =
+            "UZROCI SNIŽENIH VREDNOSTI\n\n" + this.selectedData.descIfLower;
           return;
         }
       } else if (
@@ -161,14 +200,37 @@ export class HomePage implements OnInit {
       ) {
         if (this.valueField <= this.selectedData.upperLimitKids) {
           this.description = "Vrednosti su granicama normale.";
-          this.details = this.selectedData.descIfNormal;
+          this.details = null;
           return;
         } else {
           this.description = "Vrednosti su povišene.";
-          this.details = this.selectedData.descIfHigher;
+          this.details =
+            "UZROCI POVIŠENIH VREDNOSTI\n\n" + this.selectedData.descIfHigher;
           return;
         }
       }
     }
+  }
+
+  onSearchItems(event: { component: IonicSelectableComponent; text: string }) {
+    let text = event.text.trim().toLowerCase();
+    event.component.startSearch();
+    if (!text) {
+      event.component.items = this.data;
+      event.component.endSearch();
+      return;
+    }
+    event.component.items = this.filterData(this.data, text);
+    event.component.endSearch();
+    return;
+  }
+
+  filterData(data: Data[], text: string) {
+    return data.filter((item) => {
+      return (
+        item.name.toLowerCase().indexOf(text) !== -1 ||
+        item.category.toLowerCase().indexOf(text) !== -1
+      );
+    });
   }
 }
